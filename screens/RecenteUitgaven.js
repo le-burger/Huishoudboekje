@@ -10,7 +10,7 @@ export default function RecenteUitgaven() {
   const recenteUitgaven = uitgavenCtx.uitgaven.filter((uitgave) => {
     const vandaag = new Date();
     const datum7DagenTerug = getDateMinusDays(vandaag, 7);
-    return uitgave.date >= datum7DagenTerug && uitgave.date <= vandaag;
+    return uitgave.datum >= datum7DagenTerug && uitgave.datum <= vandaag;
   });
 
   return (

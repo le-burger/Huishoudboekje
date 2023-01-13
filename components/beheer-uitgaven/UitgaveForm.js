@@ -21,7 +21,7 @@ export default function UitgaveForm({
       value: defaultValues ? getFormattedDate(defaultValues.datum) : "",
       isValid: true,
     },
-    description: {
+    omschrijving: {
       value: defaultValues ? defaultValues.omschrijving : "",
       isValid: true,
     },

@@ -16,3 +16,10 @@ De data zal bijgehouden worden in Firebase en als exta mobile functionaliteit za
 # Design
 
 ![Design](/assets/design.png)
+
+# Installatie
+
+- Clone
+- npm install
+- npm start
+- Follow instructions in terminal
