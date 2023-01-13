@@ -43,7 +43,7 @@ export default function UitgaveForm({
       omschrijving: inputs.omschrijving.value,
     };
 
-    const prijsIsValid = !isNaN(uitgaveData.prijs) && uitgaveData.prijs > 0;
+    const prijsIsValid = uitgaveData.prijs;
     const datumIsValid = uitgaveData.datum.toString() !== "Invalid Date";
     const omschrijvingIsValid = uitgaveData.omschrijving.trim().length > 0;
 
@@ -54,7 +54,7 @@ export default function UitgaveForm({
             datum: { value: curInputs.datum.value, isValid: datumIsValid },
             omschrijving: { value: curInputs.omschrijving.value, isValid: omschrijvingIsValid },
         }
-    })``
+    })
       return;
     }
 

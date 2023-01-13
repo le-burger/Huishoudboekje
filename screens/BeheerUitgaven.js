@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import UitgaveForm from "../components/beheer-uitgaven/UitgaveForm";
 import { UitgavenContext } from "../store/uitgaven-context";
 import { Colors } from "../constants/Colors";
+import { deleteUitgave, updateUitgave, addUitgave } from "../util/http";
 
 export default function BeheerUitgaven({ route, navigation }) {
   const uitgavenCtx = useContext(UitgavenContext);
@@ -21,8 +22,13 @@ export default function BeheerUitgaven({ route, navigation }) {
     });
   }, [navigation, IsBewerkt]);
 
-  function deleteExpenseHandler() {
-    uitgavenCtx.deleteUitgave(bewerkteUitgaveId);
+  async function deleteExpenseHandler() {
+    try {
+      await deleteUitgave(bewerkteUitgaveId);
+      uitgavenCtx.deleteUitgave(bewerkteUitgaveId);
+    } catch (error) {
+      console.log(error);
+    }
     navigation.goBack();
   }
 
@@ -30,12 +36,19 @@ export default function BeheerUitgaven({ route, navigation }) {
     navigation.goBack();
   }
 
-  function confirmHandler(uitgaveData) {
-    if (IsBewerkt) {
-      uitgavenCtx.updateUitgave(bewerkteUitgaveId, uitgaveData);
-    } else {
-      uitgavenCtx.addUitgave({ ...uitgaveData, id: id });
-    }
+  async function confirmHandler(uitgaveData) {
+    try {
+        if (IsBewerkt) {
+          await updateUitgave(bewerkteUitgaveId, uitgaveData)
+          uitgavenCtx.updateUitgave(bewerkteUitgaveId, uitgaveData);
+        } else {
+          console.log(uitgaveData)
+          const id = await addUitgave(uitgaveData);
+          uitgavenCtx.addUitgave({ ...uitgaveData, id: id });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     navigation.goBack();
   }
 

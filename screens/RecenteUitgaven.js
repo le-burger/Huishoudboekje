@@ -1,11 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import UitgavenOutput from "../components/uitgaven/UitgavenOutput";
 import { UitgavenContext } from "../store/uitgaven-context";
 import { getDateMinusDays } from "../util/date";
+import { getUitgaven } from "../util/http";
 
 export default function RecenteUitgaven() {
   const uitgavenCtx = useContext(UitgavenContext);
+
+  useEffect(() => {
+    async function getAlleUitgaven() {
+      try {
+        const uitgaven = await getUitgaven();
+        uitgavenCtx.setUitgaven(uitgaven);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAlleUitgaven();
+  }, [])
 
   const recenteUitgaven = uitgavenCtx.uitgaven.filter((uitgave) => {
     const vandaag = new Date();
