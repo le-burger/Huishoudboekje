@@ -1,14 +1,23 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useContext } from "react";
+
+import UitgavenOutput from "../components/uitgaven/UitgavenOutput";
+import { UitgavenContext } from "../store/uitgaven-context";
+import { getDateMinusDays } from "../util/date";
 
 export default function RecenteUitgaven() {
-    return <View style={styles.container}><Text>Recente Uitgaven</Text></View>
-}
+  const uitgavenCtx = useContext(UitgavenContext);
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+  const recenteUitgaven = uitgavenCtx.uitgaven.filter((uitgave) => {
+    const vandaag = new Date();
+    const datum7DagenTerug = getDateMinusDays(vandaag, 7);
+    return uitgave.date >= datum7DagenTerug && uitgave.date <= vandaag;
+  });
+
+  return (
+    <UitgavenOutput
+      uitgaven={recenteUitgaven}
+      periode="Afgelopen 7 dagen"
+      text={"Geen uitgaven geregistreerd afgelopen 7 dagen"}
+    />
+  );
+}

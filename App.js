@@ -9,6 +9,7 @@ import AlleUitgaven from "./screens/AlleUitgaven";
 import BeheerUitgaven from "./screens/BeheerUitgaven";
 import RecenteUitgaven from "./screens/RecenteUitgaven";
 import { Colors } from "./constants/Colors";
+import UitgavenContextProvider from "./store/uitgaven-context";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -63,37 +64,39 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: Colors.Background },
-            headerTintColor: "white",
-          }}
-        >
-          <Stack.Screen
-            name="UitgavenOverzicht"
-            component={UitgavenOverzicht}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="BeheerUitgaven"
-            component={BeheerUitgaven}
-            options={({ navigation }) => ({
-              presentation: "modal",
-              headerRight: ({ tintColor }) => (
-              <Ionicons
-                name="close"
-                size={36}
-                color={tintColor}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              />
-            ),
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UitgavenContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: Colors.Background },
+              headerTintColor: "white",
+            }}
+          >
+            <Stack.Screen
+              name="UitgavenOverzicht"
+              component={UitgavenOverzicht}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="BeheerUitgaven"
+              component={BeheerUitgaven}
+              options={({ navigation }) => ({
+                presentation: "modal",
+                headerRight: ({ tintColor }) => (
+                  <Ionicons
+                    name="close"
+                    size={36}
+                    color={tintColor}
+                    onPress={() => {
+                      navigation.goBack();
+                    }}
+                  />
+                ),
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UitgavenContextProvider>
     </>
   );
 }

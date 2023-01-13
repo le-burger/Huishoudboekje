@@ -1,14 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useContext } from "react";
+
+import UitgavenOutput from "../components/uitgaven/UitgavenOutput";
+import { UitgavenContext } from "../store/uitgaven-context";
 
 export default function AlleUitgaven() {
-    return <View style={styles.container}><Text>Alle Uitgaven</Text></View>
-}
+  const uitgavenCtx = useContext(UitgavenContext);
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+  return (
+    <UitgavenOutput
+      uitgaven={uitgavenCtx.uitgaven}
+      periode="Totaal"
+      text={"Geen uitgaven geregistreerd."}
+    />
+  );
+}
